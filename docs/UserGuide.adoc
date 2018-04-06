@@ -262,13 +262,48 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
-=== Clearing all entries : `clear`
+=== Clearing all books : `clear`
 
 
-Clears all entries from the catalogue. +
+Clears all books from the catalogue. +
 Format: `clear` +
 Privilege Level: 2(Librarian)
 
+=== Borrow a book: `borrow`
+
+Borrow the specified book from the catalogue. +
+Format: `borrow INDEX` +
+Privilege Level: 2(Librarian)
+
+****
+* Borrow the book at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `list` +
+`borrow 2` +
+Borrow the 2nd book in the catalogue.
+
+=== Clearing all accounts : `cleara`
+
+Clears all accounts from AccountList. +
+Format: `clear` +
+Privilege Level: 2(Librarian)
+
+=== Return a book : `return`
+
+Return a specified book to the catalogue +
+Format: `return INDEX` +
+Privilege Level: 2(Librarian)
+
+****
+* Return the book at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
 
 === Exiting the program : `exit`
 
@@ -310,3 +345,7 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Borrow* : `borrow INDEX` +
+e.g. `borrow 1`
+* *Return* : `return INDEX` +
+e.g. `delete 2`
