@@ -248,7 +248,7 @@ Clears all books from the catalogue. +
 Format: `clear` +
 Privilege Level: 2(Librarian)
 
-=== Clearing all accounts : `cleara`
+=== Clearing all accounts : `cleara` (TO BE IMPLEMENTED)
 
 Clears all accounts from AccountList. +
 Format: `clear` +
