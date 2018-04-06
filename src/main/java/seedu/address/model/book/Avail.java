@@ -18,7 +18,7 @@ public class Avail {
         + "3. " + RESERVED + "\n"
         + "4. " + BORROWED_AND_RESERVED + "\n";
 
-    public final String value;
+    private String value;
 
     /**
      * Constructs an {@code Avail}.
@@ -38,6 +38,14 @@ public class Avail {
         return test.equals(AVAILABLE)
             || test.equals(BORROWED)
             || test.equals(RESERVED) || test.equals(BORROWED_AND_RESERVED);
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void changeStatus(String status) {
+        this.value = status;
     }
 
     @Override

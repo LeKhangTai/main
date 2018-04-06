@@ -61,8 +61,8 @@ public class ModelManager extends ComponentManager implements Model {
         requireAllNonNull(catalogue, accountList, userPrefs);
 
         logger.fine("Initializing with catalogue: " + catalogue
-                            + ", accountList: " + accountList
-                            + " and user prefs " + userPrefs);
+            + ", accountList: " + accountList
+            + " and user prefs " + userPrefs);
 
         this.catalogue = new Catalogue(catalogue);
         filteredBooks = new FilteredList<>(this.catalogue.getBookList());
@@ -76,6 +76,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     /**
      * Adds an account to the AccountList
+     *
      * @param account
      * @throws DuplicateAccountException
      */
@@ -86,6 +87,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     /**
      * Deletes an account from the AccountList
+     *
      * @param account
      * @throws AccountNotFoundException
      */
@@ -96,6 +98,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     /**
      * Replaces an account with a new one
+     *
      * @param account
      * @param editedAccount
      * @throws DuplicateAccountException
@@ -160,11 +163,32 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public synchronized void returnBook(Book choice) throws BookNotFoundException {
+        catalogue.returnBook(choice);
+        updateFilteredBookList(PREDICATE_SHOW_ALL_BOOKS);
+        indicateCatalogueChanged();
+    }
+
+    @Override
     public void updateBook(Book target, Book editedBook)
         throws DuplicateBookException, BookNotFoundException {
         requireAllNonNull(target, editedBook);
 
         catalogue.updateBook(target, editedBook);
+        indicateCatalogueChanged();
+    }
+
+    @Override
+    public void borrowBook(Book book) throws BookNotFoundException {
+        catalogue.borrowBook(book);
+        updateFilteredBookList(PREDICATE_SHOW_ALL_BOOKS);
+        indicateCatalogueChanged();
+    }
+
+    @Override
+    public void reserveBook(Book book) throws BookNotFoundException {
+        catalogue.reserveBook(book);
+        updateFilteredBookList(PREDICATE_SHOW_ALL_BOOKS);
         indicateCatalogueChanged();
     }
 
@@ -223,5 +247,4 @@ public class ModelManager extends ComponentManager implements Model {
         return catalogue.equals(other.catalogue)
             && filteredBooks.equals(other.filteredBooks);
     }
-
 }
