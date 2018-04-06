@@ -8,7 +8,6 @@ import static seedu.address.logic.commands.CommandTestUtil.prepareRedoCommand;
 import static seedu.address.logic.commands.CommandTestUtil.prepareUndoCommand;
 import static seedu.address.logic.commands.CommandTestUtil.showBookAtIndex;
 import static seedu.address.testutil.TypicalBooks.getTypicalCatalogue;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIFTH_BOOK;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_BOOK;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_BOOK;
 
@@ -25,17 +24,6 @@ import seedu.address.model.book.Book;
 
 public class ReserveCommandTest {
     private Model model = new ModelManager(getTypicalCatalogue(), new UserPrefs());
-
-    @Test
-    public void execute_validIndexUnfilteredList_success() throws Exception {
-        Book bookToReserve = model.getFilteredBookList().get(INDEX_FIFTH_BOOK.getZeroBased());
-        ReserveCommand reserveCommand = prepareCommand(INDEX_FIFTH_BOOK);
-
-        String expectedMessage = String.format(ReserveCommand.MESSAGE_SUCCESS, bookToReserve);
-        ModelManager expectedModel = new ModelManager(model.getCatalogue(), new UserPrefs());
-        expectedModel.reserveBook(bookToReserve);
-        assertCommandSuccess(reserveCommand, model, expectedMessage, expectedModel);
-    }
 
     @Test
     public void execute_invalidIndexUnfilteredList_throwsCommandException() {
