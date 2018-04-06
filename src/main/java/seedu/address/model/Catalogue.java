@@ -149,6 +149,46 @@ public class Catalogue implements ReadOnlyCatalogue {
         }
     }
 
+    /**
+     * alter {@code key} book status from {@code Catalogue}
+     *
+     * @throws BookNotFoundException
+     */
+
+    public boolean returnBook(Book key) throws BookNotFoundException {
+        if (books.returnBook(key)) {
+            return true;
+        } else {
+            throw new BookNotFoundException();
+        }
+    }
+
+    /**
+     * Borrows {@code key} from this {@code Catalogue}.
+     *
+     * @throws BookNotFoundException if the {@code key} is not in this {@code Catalogue}.
+     */
+    public boolean borrowBook(Book key) throws BookNotFoundException {
+        if (books.borrow(key)) {
+            return true;
+        } else {
+            throw new BookNotFoundException();
+        }
+    }
+
+    /**
+     * Borrows a book and returns a boolean indicating the result
+     * @param key
+     * @return
+     * @throws BookNotFoundException
+     */
+    public boolean reserveBook(Book key) throws BookNotFoundException {
+        if (books.reserve(key)) {
+            return true;
+        } else {
+            throw new BookNotFoundException();
+        }
+    }
     //// tag-level operations
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
