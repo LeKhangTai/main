@@ -45,14 +45,12 @@ public class Title {
 
     @Override
     public boolean equals(Object other) {
-        return other == this // short circuit if same object
-            || (other instanceof Title // instanceof handles nulls
-            && this.fullTitle.equals(((Title) other).fullTitle)); // state check
+        return other == this // short circuit if same object            || (other instanceof Title // instanceof handles nulls
+            && this.fullTitle.equals(((Title) other).fullTitle); // state check
     }
 
     @Override
     public int hashCode() {
         return fullTitle.hashCode();
     }
-
 }
