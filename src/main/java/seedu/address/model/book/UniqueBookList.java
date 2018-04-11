@@ -87,77 +87,81 @@ public class UniqueBookList implements Iterable<Book> {
 
     /**
      * Returns a book
-     * @param toReturn
+     * @param target, returnedBook
      * @return
      * @throws BookNotFoundException
      */
-    public boolean returnBook(Book toReturn) throws BookNotFoundException {
-        requireAllNonNull(toReturn);
+    public void replaceReturnedBook(Book target, Book returnedBook)
+            throws BookNotFoundException {
+        requireNonNull(returnedBook);
 
-        String status = toReturn.getAvail().toString();
+        int index = internalList.indexOf(target);
+        String status = target.getAvail().getValue();
 
-        switch (status) {
+        switch (status){
 
-        case BORROWED:
-            toReturn.getAvail().changeStatus(AVAILABLE);
-            return true;
+            case(BORROWED):
+                internalList.set(index, returnedBook);
+                break;
 
-        case BORROWED_AND_RESERVED:
-            toReturn.getAvail().changeStatus(RESERVED);
-            return true;
+            case(RESERVED):
+                internalList.set(index, returnedBook);
+                break;
 
-        default:
-            throw new BookNotFoundException();
+            default:
+                throw new BookNotFoundException();
+
         }
+
+
     }
 
     /**
      * Borrows a book
-     * @param toBorrow
+     * @param target, borrowedBook
      * @return
      * @throws BookNotFoundException
      */
-    public boolean borrow(Book toBorrow) throws BookNotFoundException {
-        requireNonNull(toBorrow);
-        String bookStatus = toBorrow.getAvail().toString();
+    public void replaceBorrowedBook(Book target, Book borrowedBook)
+            throws BookNotFoundException {
+        requireNonNull(borrowedBook);
 
-        switch (bookStatus) {
-        case (AVAILABLE):
-            toBorrow.getAvail().changeStatus(BORROWED);
-            return true;
+        int index = internalList.indexOf(target);
+        String status = target.getAvail().getValue();
 
-        case(RESERVED):
-            toBorrow.getAvail().changeStatus(BORROWED);
-            return true;
+        switch (status) {
 
-        default:
-            throw new BookNotFoundException();
+            case (AVAILABLE):
+                internalList.set(index, borrowedBook);
+                break;
+
+            default:
+                throw new BookNotFoundException();
+
         }
     }
 
     /**
      * Reserves a book
-     * @param toReserve
+     * @param target, reservedBook
      * @return
      * @throws BookNotFoundException
      */
-    public boolean reserve(Book toReserve) throws BookNotFoundException, BookAlreadyAvailableException {
-        requireNonNull(toReserve);
-        String bookStatus = toReserve.getAvail().toString();
+    public void replaceReservedBook(Book target, Book reservedBook)
+            throws BookNotFoundException {
+        requireNonNull(reservedBook);
+        int index = internalList.indexOf(target);
+        String status = target.getAvail().getValue();
 
-        switch (bookStatus) {
+        switch (status) {
 
+            case (BORROWED):
+                internalList.set(index, reservedBook);
+                break;
 
-        case(AVAILABLE):
-            throw new BookAlreadyAvailableException();
+            default:
+                throw new BookNotFoundException();
 
-        case (BORROWED):
-            toReserve.getAvail().changeStatus(BORROWED_AND_RESERVED);
-            return true;
-
-
-        default:
-            throw new BookNotFoundException();
         }
     }
 

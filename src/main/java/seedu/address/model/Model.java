@@ -50,17 +50,17 @@ public interface Model {
     /**
      * Returns the given book
      */
-    void returnBook(Book book) throws BookNotFoundException;
+    void returnBook(Book target, Book returnedBook) throws BookNotFoundException;
 
     /**
      * Borrows the given book
      */
-    void borrowBook(Book book) throws BookNotFoundException;
+    void borrowBook(Book target, Book borrowedBook) throws BookNotFoundException;
 
     /**
      * Reserves the given book
      */
-    void reserveBook(Book book) throws BookNotFoundException, BookAlreadyAvailableException;
+    void reserveBook(Book target, Book reservedBook) throws BookNotFoundException, BookAlreadyAvailableException;
 
     /**
      * Replaces the given book {@code target} with {@code editedBook}.

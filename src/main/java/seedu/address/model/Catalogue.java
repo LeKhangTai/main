@@ -156,12 +156,15 @@ public class Catalogue implements ReadOnlyCatalogue {
      * @throws BookNotFoundException
      */
 
-    public boolean returnBook(Book key) throws BookNotFoundException {
-        if (books.returnBook(key)) {
-            return true;
-        } else {
-            throw new BookNotFoundException();
-        }
+    public void returnBook(Book target, Book returnedBook)
+            throws BookNotFoundException {
+        requireNonNull(returnedBook);
+
+        Book syncedEditedBook = syncWithMasterTagList(returnedBook);
+        // TODO: the tags master list will be updated even though the below line fails.
+        // This can cause the tags master list to have additional tags that are not tagged to any book
+        // in the book list.
+        books.replaceReturnedBook(target, syncedEditedBook);
     }
 
     /**
@@ -169,26 +172,32 @@ public class Catalogue implements ReadOnlyCatalogue {
      *
      * @throws BookNotFoundException if the {@code key} is not in this {@code Catalogue}.
      */
-    public boolean borrowBook(Book key) throws BookNotFoundException {
-        if (books.borrow(key)) {
-            return true;
-        } else {
-            throw new BookNotFoundException();
-        }
+    public void borrowBook(Book target, Book borrowedBook)
+            throws BookNotFoundException {
+        requireNonNull(borrowedBook);
+
+        Book syncedEditedBook = syncWithMasterTagList(borrowedBook);
+        // TODO: the tags master list will be updated even though the below line fails.
+        // This can cause the tags master list to have additional tags that are not tagged to any book
+        // in the book list.
+        books.replaceBorrowedBook(target, syncedEditedBook);
     }
 
     /**
      * Borrows a book and returns a boolean indicating the result
-     * @param key
+     * @param target, reservedBook
      * @return
      * @throws BookNotFoundException
      */
-    public boolean reserveBook(Book key) throws BookNotFoundException, BookAlreadyAvailableException {
-        if (books.reserve(key)) {
-            return true;
-        } else {
-            throw new BookNotFoundException();
-        }
+    public void reserveBook(Book target, Book reservedBook)
+            throws BookNotFoundException {
+        requireNonNull(reservedBook);
+
+        Book syncedEditedBook = syncWithMasterTagList(reservedBook);
+        // TODO: the tags master list will be updated even though the below line fails.
+        // This can cause the tags master list to have additional tags that are not tagged to any book
+        // in the book list.
+        books.replaceReservedBook(target, syncedEditedBook);
     }
     //// tag-level operations
 

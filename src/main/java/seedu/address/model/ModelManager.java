@@ -164,9 +164,8 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public synchronized void returnBook(Book choice) throws BookNotFoundException {
-        catalogue.returnBook(choice);
-        updateFilteredBookList(PREDICATE_SHOW_ALL_BOOKS);
+    public void returnBook(Book target, Book returnedBook) throws BookNotFoundException {
+        catalogue.returnBook(target, returnedBook);
         indicateCatalogueChanged();
     }
 
@@ -180,16 +179,16 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void borrowBook(Book book) throws BookNotFoundException {
-        catalogue.borrowBook(book);
-        updateFilteredBookList(PREDICATE_SHOW_ALL_BOOKS);
+    public void borrowBook(Book target, Book borrowedBook) throws BookNotFoundException {
+        catalogue.borrowBook(target, borrowedBook);
+        requireAllNonNull(target, borrowedBook);
         indicateCatalogueChanged();
     }
 
     @Override
-    public void reserveBook(Book book) throws BookNotFoundException, BookAlreadyAvailableException {
-        catalogue.reserveBook(book);
-        updateFilteredBookList(PREDICATE_SHOW_ALL_BOOKS);
+    public void reserveBook(Book target, Book reservedBook) throws BookNotFoundException {
+        catalogue.reserveBook(target,reservedBook);
+        requireAllNonNull(target, reservedBook);
         indicateCatalogueChanged();
     }
 
