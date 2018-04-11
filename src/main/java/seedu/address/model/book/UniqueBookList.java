@@ -103,7 +103,7 @@ public class UniqueBookList implements Iterable<Book> {
             return true;
 
         case BORROWED_AND_RESERVED:
-            toReturn.getAvail().changeStatus(AVAILABLE);
+            toReturn.getAvail().changeStatus(RESERVED);
             return true;
 
         default:
@@ -123,6 +123,10 @@ public class UniqueBookList implements Iterable<Book> {
 
         switch (bookStatus) {
         case (AVAILABLE):
+            toBorrow.getAvail().changeStatus(BORROWED);
+            return true;
+
+        case(RESERVED):
             toBorrow.getAvail().changeStatus(BORROWED);
             return true;
 
