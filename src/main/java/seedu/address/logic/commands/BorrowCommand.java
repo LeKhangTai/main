@@ -1,19 +1,17 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.model.book.Avail.BORROWED;
 
-import java.util.*;
+import java.util.List;
+import java.util.Objects;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.account.PrivilegeLevel;
-import seedu.address.model.book.*;
+import seedu.address.model.book.Book;
 import seedu.address.model.book.exceptions.BookNotFoundException;
-import seedu.address.model.tag.Tag;
 
 /**
  * Borrows a book
@@ -25,40 +23,24 @@ public class BorrowCommand extends UndoableCommand {
     public static final String MESSAGE_FAILURE = "Book not available for borrowing!";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Borrows the book identified by the index number used in the last book listing.\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " 1";
+        + ": Borrows the book identified by the index number used in the last book listing.\n"
+        + "Parameters: INDEX (must be a positive integer)\n"
+        + "Example: " + COMMAND_WORD + " 1";
     public static final PrivilegeLevel PRIVILEGE_LEVEL = Model.PRIVILEGE_LEVEL_STUDENT;
 
     private final Index targetIndex;
 
     private Book bookToBorrow;
-    private Book borrowedBook;
-
 
     public BorrowCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
     }
 
-    private static Book createBorrowedBook(Book bookToBorrow) {
-        assert bookToBorrow != null;
-
-        Title updatedTitle = bookToBorrow.getTitle();
-        Isbn updatedIsbn = bookToBorrow.getIsbn();
-        Avail updatedAvail = new Avail(BORROWED);
-        Author updatedAuthor = bookToBorrow.getAuthor();
-        Set<Tag> updatedTags = bookToBorrow.getTags();
-
-        return new Book(updatedTitle, updatedAuthor, updatedIsbn, updatedAvail, updatedTags);
-    }
-
-
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-        requireNonNull(model);
-
+        requireNonNull(bookToBorrow);
         try {
-            model.borrowBook(bookToBorrow,borrowedBook);
+            model.borrowBook(bookToBorrow);
         } catch (BookNotFoundException pnfe) {
             throw new CommandException(MESSAGE_FAILURE);
         }
@@ -73,7 +55,6 @@ public class BorrowCommand extends UndoableCommand {
             throw new CommandException(Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
         }
         bookToBorrow = lastShownList.get(targetIndex.getZeroBased());
-        borrowedBook = createBorrowedBook(bookToBorrow);
     }
 
     @Override
@@ -86,7 +67,7 @@ public class BorrowCommand extends UndoableCommand {
         }
         BorrowCommand that = (BorrowCommand) o;
         return Objects.equals(targetIndex, that.targetIndex)
-                && Objects.equals(bookToBorrow, that.bookToBorrow);
+            && Objects.equals(bookToBorrow, that.bookToBorrow);
     }
 
     @Override
@@ -98,5 +79,4 @@ public class BorrowCommand extends UndoableCommand {
     public PrivilegeLevel getPrivilegeLevel() {
         return PRIVILEGE_LEVEL;
     }
-
 }
