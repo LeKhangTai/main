@@ -31,8 +31,7 @@ public class Title {
         this.fullTitle = title;
     }
 
-    /**
-     * Returns true if a given string is a valid book name.
+    /**     * Returns true if a given string is a valid book name.
      */
     public static boolean isValidTitle(String test) {
         return test.matches(TITLE_VALIDATION_REGEX);
@@ -45,8 +44,7 @@ public class Title {
 
     @Override
     public boolean equals(Object other) {
-        return other == this // short circuit if same object
-            || (other instanceof Title // instanceof handles nulls
+        return other == this // short circuit if same object            || (other instanceof Title // instanceof handles nulls
             && this.fullTitle.equals(((Title) other).fullTitle)); // state check
     }
 
@@ -54,5 +52,4 @@ public class Title {
     public int hashCode() {
         return fullTitle.hashCode();
     }
-
 }
