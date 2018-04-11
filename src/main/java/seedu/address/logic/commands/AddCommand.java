@@ -34,7 +34,7 @@ public class AddCommand extends UndoableCommand {
         + PREFIX_ISBN + "9780736692427 "
         + PREFIX_AVAIL + "Borrowed "
         + PREFIX_TAG + "political "
-        + PREFIX_TAG + "satire";
+        + PREFIX_TAG + "satire ";
 
     public static final String MESSAGE_SUCCESS = "New book added: %1$s";
     public static final String MESSAGE_DUPLICATE_BOOK = "This book already exists in the catalogue";
@@ -69,6 +69,7 @@ public class AddCommand extends UndoableCommand {
             && toAdd.equals(((AddCommand) other).toAdd));
     }
 
+    //@@author QiuHaohao
     @Override
     public PrivilegeLevel getPrivilegeLevel() {
         return PRIVILEGE_LEVEL;

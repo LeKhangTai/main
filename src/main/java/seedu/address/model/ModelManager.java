@@ -54,6 +54,8 @@ public class ModelManager extends ComponentManager implements Model {
 
     }
 
+    //@@author QiuHaohao
+
     /**
      * Initializes a ModelManager with the given catalogue, accountList and userPrefs.
      */
@@ -70,10 +72,13 @@ public class ModelManager extends ComponentManager implements Model {
         this.accountList = accountList;
         this.currentAccount = Account.createGuestAccount();
     }
+    //@@author
 
     public ModelManager() {
         this(new Catalogue(), new UserPrefs());
     }
+
+    //@@author QiuHaohao
 
     /**
      * Adds an account to the AccountList
@@ -124,6 +129,7 @@ public class ModelManager extends ComponentManager implements Model {
             }
         }
     }
+    //@@author
 
     @Override
     public void resetData(ReadOnlyCatalogue newData) {
@@ -143,12 +149,15 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new CatalogueChangedEvent(catalogue));
     }
 
+    //@@author QiuHaohao
+
     /**
      * Raises an event to indicate the model has changed
      */
     private void indicateAccountListChanged() {
         raise(new AccountListChangedEvent(accountList));
     }
+    //@@author
 
     @Override
     public synchronized void deleteBook(Book target) throws BookNotFoundException {
@@ -209,6 +218,7 @@ public class ModelManager extends ComponentManager implements Model {
         filteredBooks.setPredicate(predicate);
     }
 
+    //@@author QiuHaohao
     @Override
     public PrivilegeLevel authenticate(Credential c) {
         Account matched = accountList.authenticate(c);
@@ -229,6 +239,7 @@ public class ModelManager extends ComponentManager implements Model {
     public PrivilegeLevel getPrivilegeLevel() {
         return this.currentAccount.getPrivilegeLevel();
     }
+    //@@author
 
     @Override
     public boolean equals(Object obj) {

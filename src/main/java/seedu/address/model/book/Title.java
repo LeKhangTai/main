@@ -8,12 +8,12 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  * Guarantees: immutable; is valid as declared in {@link #isValidTitle(String)}
  */
 public class Title {
-
+    //@@author khiayi
     public static final String MESSAGE_TITLE_CONSTRAINTS =
         "Book titles should only contain alphanumeric characters and spaces, and it should not be blank";
 
     /*
-     * The first character of the address must not be a whitespace,
+     * The first character of the title must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
     public static final String TITLE_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
@@ -31,7 +31,9 @@ public class Title {
         this.fullTitle = title;
     }
 
-    /**     * Returns true if a given string is a valid book name.
+    //@@author
+    /**
+     * Returns true if a given string is a valid book name.
      */
     public static boolean isValidTitle(String test) {
         return test.matches(TITLE_VALIDATION_REGEX);
