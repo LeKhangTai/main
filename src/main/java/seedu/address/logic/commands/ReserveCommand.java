@@ -1,18 +1,21 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.model.book.Avail.BORROWED;
+import static seedu.address.model.book.Avail.RESERVED;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.account.PrivilegeLevel;
-import seedu.address.model.book.Book;
-import seedu.address.model.book.BookAlreadyAvailableException;
+import seedu.address.model.book.*;
 import seedu.address.model.book.exceptions.BookNotFoundException;
+import seedu.address.model.tag.Tag;
 
 /**
  * Reserves a book
@@ -33,16 +36,28 @@ public class ReserveCommand extends UndoableCommand {
     private final Index targetIndex;
 
     private Book bookToReserve;
+    private Book reservedBook;
 
     public ReserveCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
     }
 
+    private static Book createReservedBook(Book bookToReserve) {
+        assert bookToReserve != null;
+
+        Title updatedTitle = bookToReserve.getTitle();
+        Isbn updatedIsbn = bookToReserve.getIsbn();
+        Avail updatedAvail = new Avail(RESERVED);
+        Author updatedAuthor = bookToReserve.getAuthor();
+        Set<Tag> updatedTags = bookToReserve.getTags();
+
+        return new Book(updatedTitle, updatedAuthor, updatedIsbn, updatedAvail, updatedTags);
+    }
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(bookToReserve);
         try {
-            model.reserveBook(bookToReserve);
+            model.reserveBook(bookToReserve,reservedBook);
         } catch (BookNotFoundException pnfe) {
             throw new CommandException(MESSAGE_FAILURE);
         }
@@ -60,6 +75,7 @@ public class ReserveCommand extends UndoableCommand {
             throw new CommandException(Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
         }
         bookToReserve = lastShownList.get(targetIndex.getZeroBased());
+        reservedBook = createReservedBook(bookToReserve);
     }
 
     @Override
