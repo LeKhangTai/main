@@ -2,6 +2,10 @@ package seedu.address.model.book;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.model.book.Avail.AVAILABLE;
+import static seedu.address.model.book.Avail.BORROWED;
+import static seedu.address.model.book.Avail.BORROWED_AND_RESERVED;
+import static seedu.address.model.book.Avail.RESERVED;
 
 import java.util.Iterator;
 import java.util.List;
@@ -9,15 +13,23 @@ import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
-import seedu.address.model.book.DuplicateBookException;
-import seedu.address.model.book.BookNotFoundException;
+import seedu.address.model.book.exceptions.BookNotFoundException;
+import seedu.address.model.book.exceptions.DuplicateBookException;
 
+/**
+ * A list of books that enforces uniqueness between its elements and does not allow nulls.
+ * <p>
+ * Supports a minimal set of list operations.
+ *
+ * @see Book#equals(Object)
+ * @see CollectionUtil#elementsAreUnique(Collection)
+ */
 public class UniqueBookList implements Iterable<Book> {
 
     private final ObservableList<Book> internalList = FXCollections.observableArrayList();
 
     /**
-     * Returns true if the list contains an equivalent person as the given argument.
+     * Returns true if the list contains an equivalent book as the given argument.
      */
     public boolean contains(Book toCheck) {
         requireNonNull(toCheck);
@@ -25,9 +37,9 @@ public class UniqueBookList implements Iterable<Book> {
     }
 
     /**
-     * Adds a person to the list.
+     * Adds a book to the list.
      *
-     * @throws DuplicateBookException if the person to add is a duplicate of an existing person in the list.
+     * @throws DuplicateBookException if the book to add is a duplicate of an existing book in the list.
      */
     public void add(Book toAdd) throws DuplicateBookException {
         requireNonNull(toAdd);
@@ -38,31 +50,31 @@ public class UniqueBookList implements Iterable<Book> {
     }
 
     /**
-     * Replaces the person {@code target} in the list with {@code editedbook}.
+     * Replaces the book {@code target} in the list with {@code editedBook}.
      *
-     * @throws DuplicateBookException if the replacement is equivalent to another existing person in the list.
-     * @throws BookNotFoundException if {@code target} could not be found in the list.
+     * @throws DuplicateBookException if the replacement is equivalent to another existing book in the list.
+     * @throws BookNotFoundException  if {@code target} could not be found in the list.
      */
-    public void setBook(Book target, Book editedbook)
-            throws DuplicateBookException, BookNotFoundException {
-        requireNonNull(editedbook);
+    public void setBook(Book target, Book editedBook)
+        throws DuplicateBookException, BookNotFoundException {
+        requireNonNull(editedBook);
 
         int index = internalList.indexOf(target);
         if (index == -1) {
             throw new BookNotFoundException();
         }
 
-        if (!target.equals(editedbook) && internalList.contains(editedbook)) {
+        if (!target.equals(editedBook) && internalList.contains(editedBook)) {
             throw new DuplicateBookException();
         }
 
-        internalList.set(index, editedbook);
+        internalList.set(index, editedBook);
     }
 
     /**
-     * Removes the equivalent person from the list.
+     * Removes the equivalent book from the list.
      *
-     * @throws BookNotFoundException if no such person could be found in the list.
+     * @throws BookNotFoundException if no such book could be found in the list.
      */
     public boolean remove(Book toRemove) throws BookNotFoundException {
         requireNonNull(toRemove);
@@ -71,6 +83,98 @@ public class UniqueBookList implements Iterable<Book> {
             throw new BookNotFoundException();
         }
         return bookFoundAndDeleted;
+    }
+
+    /**
+     * Returns a book
+     * @param toReturn
+     * @return
+     * @throws BookNotFoundException
+     */
+    public boolean returnBook(Book toReturn) throws BookNotFoundException {
+        requireAllNonNull(toReturn);
+
+        String status = toReturn.getAvail().toString();
+
+        switch (status) {
+
+        case AVAILABLE:
+            return true;
+
+        case BORROWED:
+            toReturn.getAvail().changeStatus(AVAILABLE);
+            return true;
+
+        case BORROWED_AND_RESERVED:
+            toReturn.getAvail().changeStatus(AVAILABLE);
+            return true;
+
+        case RESERVED:
+            toReturn.getAvail().changeStatus(AVAILABLE);
+            return true;
+
+        default:
+            throw new BookNotFoundException();
+        }
+    }
+
+    /**
+     * Borrows a book
+     * @param toBorrow
+     * @return
+     * @throws BookNotFoundException
+     */
+    public boolean borrow(Book toBorrow) throws BookNotFoundException {
+        requireNonNull(toBorrow);
+        String bookStatus = toBorrow.getAvail().toString();
+
+        switch (bookStatus) {
+        case (AVAILABLE):
+            toBorrow.getAvail().changeStatus(BORROWED);
+            return true;
+
+        case (BORROWED):
+            return true;
+
+        case (BORROWED_AND_RESERVED):
+            return true;
+
+        case (RESERVED):
+            return false;
+
+        default:
+            throw new BookNotFoundException();
+        }
+    }
+
+    /**
+     * Reserves a book
+     * @param toReserve
+     * @return
+     * @throws BookNotFoundException
+     */
+    public boolean reserve(Book toReserve) throws BookNotFoundException {
+        requireNonNull(toReserve);
+        String bookStatus = toReserve.getAvail().toString();
+
+        switch (bookStatus) {
+        case (AVAILABLE):
+            toReserve.getAvail().changeStatus(RESERVED);
+            return true;
+
+        case (BORROWED):
+            toReserve.getAvail().changeStatus(BORROWED_AND_RESERVED);
+            return true;
+
+        case (BORROWED_AND_RESERVED):
+            return true;
+
+        case (RESERVED):
+            return true;
+
+        default:
+            throw new BookNotFoundException();
+        }
     }
 
     public void setBooks(UniqueBookList replacement) {
@@ -101,8 +205,8 @@ public class UniqueBookList implements Iterable<Book> {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof UniqueBookList // instanceof handles nulls
-                && this.internalList.equals(((UniqueBookList) other).internalList));
+            || (other instanceof UniqueBookList // instanceof handles nulls
+            && this.internalList.equals(((UniqueBookList) other).internalList));
     }
 
     @Override

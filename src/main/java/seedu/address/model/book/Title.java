@@ -3,11 +3,14 @@ package seedu.address.model.book;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
-
+/**
+ * Represents a Book's name in the catalogue.
+ * Guarantees: immutable; is valid as declared in {@link #isValidTitle(String)}
+ */
 public class Title {
 
     public static final String MESSAGE_TITLE_CONSTRAINTS =
-            "Book title should only contain alphanumeric characters and spaces, and it should not be blank";
+        "Book titles should only contain alphanumeric characters and spaces, and it should not be blank";
 
     /*
      * The first character of the address must not be a whitespace,
@@ -18,23 +21,21 @@ public class Title {
     public final String fullTitle;
 
     /**
-     * Constructs a {@code title}.
+     * Constructs a {@code Title}.
      *
-     * @param title A valid name.
+     * @param title A valid title.
      */
     public Title(String title) {
         requireNonNull(title);
-        checkArgument(isValidName(title), MESSAGE_TITLE_CONSTRAINTS);
+        checkArgument(isValidTitle(title), MESSAGE_TITLE_CONSTRAINTS);
         this.fullTitle = title;
     }
 
-    /**
-     * Returns true if a given string is a valid person name.
+    /**     * Returns true if a given string is a valid book name.
      */
-    public static boolean isValidName(String test) {
+    public static boolean isValidTitle(String test) {
         return test.matches(TITLE_VALIDATION_REGEX);
     }
-
 
     @Override
     public String toString() {
@@ -43,15 +44,12 @@ public class Title {
 
     @Override
     public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof Title // instanceof handles nulls
-                && this.fullTitle.equals(((Title) other).fullTitle)); // state check
+        return other == this // short circuit if same object            || (other instanceof Title // instanceof handles nulls
+            && this.fullTitle.equals(((Title) other).fullTitle)); // state check
     }
 
     @Override
     public int hashCode() {
         return fullTitle.hashCode();
     }
-
-
 }
