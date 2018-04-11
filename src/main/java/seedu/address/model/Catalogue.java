@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.book.Book;
+import seedu.address.model.book.BookAlreadyAvailableException;
 import seedu.address.model.book.UniqueBookList;
 import seedu.address.model.book.exceptions.BookNotFoundException;
 import seedu.address.model.book.exceptions.DuplicateBookException;
@@ -182,7 +183,7 @@ public class Catalogue implements ReadOnlyCatalogue {
      * @return
      * @throws BookNotFoundException
      */
-    public boolean reserveBook(Book key) throws BookNotFoundException {
+    public boolean reserveBook(Book key) throws BookNotFoundException, BookAlreadyAvailableException {
         if (books.reserve(key)) {
             return true;
         } else {

@@ -9,6 +9,7 @@ import seedu.address.model.account.PrivilegeLevel;
 import seedu.address.model.account.exceptions.AccountNotFoundException;
 import seedu.address.model.account.exceptions.DuplicateAccountException;
 import seedu.address.model.book.Book;
+import seedu.address.model.book.BookAlreadyAvailableException;
 import seedu.address.model.book.exceptions.BookNotFoundException;
 import seedu.address.model.book.exceptions.DuplicateBookException;
 
@@ -59,7 +60,7 @@ public interface Model {
     /**
      * Reserves the given book
      */
-    void reserveBook(Book book) throws BookNotFoundException;
+    void reserveBook(Book book) throws BookNotFoundException, BookAlreadyAvailableException;
 
     /**
      * Replaces the given book {@code target} with {@code editedBook}.

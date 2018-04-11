@@ -20,6 +20,7 @@ import seedu.address.model.account.UniqueAccountList;
 import seedu.address.model.account.exceptions.AccountNotFoundException;
 import seedu.address.model.account.exceptions.DuplicateAccountException;
 import seedu.address.model.book.Book;
+import seedu.address.model.book.BookAlreadyAvailableException;
 import seedu.address.model.book.exceptions.BookNotFoundException;
 import seedu.address.model.book.exceptions.DuplicateBookException;
 
@@ -186,7 +187,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void reserveBook(Book book) throws BookNotFoundException {
+    public void reserveBook(Book book) throws BookNotFoundException, BookAlreadyAvailableException {
         catalogue.reserveBook(book);
         updateFilteredBookList(PREDICATE_SHOW_ALL_BOOKS);
         indicateCatalogueChanged();

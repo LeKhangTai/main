@@ -11,6 +11,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.account.PrivilegeLevel;
 import seedu.address.model.book.Book;
+import seedu.address.model.book.BookAlreadyAvailableException;
 import seedu.address.model.book.exceptions.BookNotFoundException;
 
 /**
@@ -20,7 +21,7 @@ public class ReserveCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "reserve";
     public static final String MESSAGE_SUCCESS = "Book reserved: %1$s";
     public static final String MESSAGE_FAILURE = "Book not available for reserving!";
-
+    public static final String MESSAGE_ALREADY_AVAILABLE = "Do not need to reserve book as book is already available.";
     public static final String MESSAGE_USAGE = COMMAND_WORD
         + ": Reserves the book identified by the index number used in the last book listing.\n"
         + "Parameters: INDEX (must be a positive integer)\n"
@@ -44,6 +45,9 @@ public class ReserveCommand extends UndoableCommand {
             model.reserveBook(bookToReserve);
         } catch (BookNotFoundException pnfe) {
             throw new CommandException(MESSAGE_FAILURE);
+        }
+         catch (BookAlreadyAvailableException abc){
+            throw new CommandException(MESSAGE_ALREADY_AVAILABLE);
         }
         return new CommandResult(String.format(MESSAGE_SUCCESS, bookToReserve));
     }
