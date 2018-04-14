@@ -316,11 +316,11 @@ Clears all books from the catalogue. +
 Format: `clear` +
 Privilege Level: 2(Librarian)
 
-=== Borrow a book: `borrow`[TO BE IMPLEMENTED]
+=== Borrow a book: `borrow`
 
 Borrow the specified book from the catalogue. +
 Format: `borrow INDEX` +
-Privilege Level: 1(Student)
+Privilege Level: 2(Librarian)
 
 ****
 * Borrow the book at the specified `INDEX`.
@@ -343,14 +343,14 @@ Privilege Level: 2(Librarian)
 [NOTE]
 When an librarian clears the list of accounts, it is automatically logged out.
 
-=== Return a book : `return`[TO BE IMPLEMENTED]
+=== Return a book : `return`
 
 Return a specified book to the catalogue +
 Format: `return INDEX` +
-Privilege Level: 1(Student)
+Privilege Level: 2(Librarian)
 
 [NOTE]
-Can only return book that has been borrowed
+Can only return book that has been borrowed or reserved
 
 ****
 * Return the book at the specified `INDEX`.
@@ -358,17 +358,17 @@ Can only return book that has been borrowed
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
 
-=== Renew a book : `renew` [TO BE IMPLEMENTED]
+=== Reserve a book : `reserve`
 
-Renew a specific book from the Catalogue +
-Format: `renew INDEX` +
-Privilege Level: 1(Student)
+Reserve a specific book from the Catalogue +
+Format: `reserve INDEX` +
+Privilege Level: 2(Librarian)
 
 [NOTE]
-Can only renew book that has been borrowed
+Can only reserve book that has been borrowed
 
 ****
-* Renew the book at the specified `INDEX`.
+* Reserve the book at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
