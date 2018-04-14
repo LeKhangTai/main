@@ -181,7 +181,7 @@ image::LogicClassDiagram.png[width="800"]
 image::LogicCommandClassDiagram.png[width="800"]
 
 *API* :
-link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
+link:https://github.com/CS2103JAN2018-T16-B1/main/tree/master/src/main/java/seedu/address/logic[`Logic.java`]
 
 .  `Logic` uses the `CatalogueParser` class to parse the user command.
 .  This results in a `Command` object which is executed by the `LogicManager`.
