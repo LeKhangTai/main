@@ -1045,7 +1045,41 @@ _{ more test cases ... }_
 .. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
    Expected: Similar to previous.
 
-_{ more test cases ... }_
+=== Borrowing a book
+
+. Borrowing a book while all books are listed
+
+.. Prerequisites: List all books using the `list` command. Multiple books in the list.
+.. Test case: `borrow 1` +
+   Expected: First book will be borrowed from the list, given that it is available. Details of the borrowed book will be shown in the status message.
+.. Test case: `borrow 0` +
+   Expected: No book is borrowed. Error details shown in the status message. Status bar remains the same.
+  .. Other incorrect borrow commands to try: `borrow`, `borrow x`(where x is larger than list size or not an integer), `borrow [valid index]`(where the book is not available)
+  Expected: Similar to previous.
+
+=== Returning a book
+
+. Returning a book while all books are listed
+
+.. Prerequisites: List all books using the `list` command. Multiple books in the list.
+.. Test case: `return 1` +
+   Expected: First book will be returned from the list, given that it is borrowed or reserved. Details of the returned book will be shown in the status message.
+.. Test case: `return 0` +
+   Expected: No book is returned. Error details shown in the status message. Status bar remains the same.
+  .. Other incorrect return commands to try: `return`, `return x`(where x is larger than list size or not an integer), `return [valid index]`(where the book is available)
+  Expected: Similar to previous.
+
+=== Reserving a book
+
+. Reserving a book while all books are listed
+
+.. Prerequisites: List all books using the `list` command. Multiple books in the list.
+.. Test case: `reserve 1` +
+   Expected: First book will be reserved from the list, given that it is borrowed. Details of the reserved book will be shown in the status message.
+.. Test case: `reserve 0` +
+   Expected: No book is reserved. Error details shown in the status message. Status bar remains the same.
+  .. Other incorrect reserve commands to try: `reserve`, `reserve x`(where x is larger than list size or not an integer), `reserve [valid index]`(where the book is not borrowed)
+  Expected: Similar to previous.
 
 === Saving data
 
