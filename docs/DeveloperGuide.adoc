@@ -902,7 +902,77 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-_{More to be added}_
+[discrete]
+== Use case: Borrow book
+
+*MSS*
+
+1. User login an account with librarian privilege
+2. User requests to list books
+3. User requests to borrow a specific book in the list
+4. List will book with 'Borrowed' availability
+
+*Extensions*
+
+[none]
+* 2a. The book is already borrowed or reserved
++
+Catalogue shows an error message.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. Catalogue shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+== Use case: Return book
+
+*MSS*
+
+1. User login an account with librarian privilege
+2. User requests to list books
+3. User requests to return a specific book in the list
+4. List will book with 'Available' availability
+
+*Extensions*
+
+[none]
+* 2a. The book is already available
++
+Catalogue shows an error message.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. Catalogue shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+== Use case: Reserve book
+
+*MSS*
+
+1. User login an account with librarian privilege
+2. User requests to list books
+3. User requests to reserve a specific book in the list
+4. List will book with 'Reserved' availability
+
+*Extensions*
+
+[none]
+* 2a. The book is available
++
+Catalogue shows an error message.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. Catalogue shows an error message.
++
+Use case resumes at step 2.
 
 [appendix]
 == Non Functional Requirements
