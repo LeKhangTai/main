@@ -316,6 +316,7 @@ Clears all books from the catalogue. +
 Format: `clear` +
 Privilege Level: 2(Librarian)
 
+// tag::BorrowReturnReserve[]
 === Borrow a book: `borrow`
 
 Borrow the specified book from the catalogue. +
@@ -327,21 +328,11 @@ Privilege Level: 2(Librarian)
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
-
 Examples:
 
 * `list` +
 `borrow 2` +
 Borrow the 2nd book in the catalogue.
-
-=== Clearing all accounts : `cleara`
-
-Clears all accounts from AccountList. +
-Format: `clear` +
-Privilege Level: 2(Librarian)
-
-[NOTE]
-When an librarian clears the list of accounts, it is automatically logged out.
 
 === Return a book : `return`
 
@@ -357,6 +348,11 @@ Can only return book that has been borrowed or reserved
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
+Examples:
+
+* `list` +
+`return 2` +
+Return the 2nd book in the catalogue.
 
 === Reserve a book : `reserve`
 
@@ -367,11 +363,29 @@ Privilege Level: 2(Librarian)
 [NOTE]
 Can only reserve book that has been borrowed
 
+
 ****
 * Reserve the book at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
+Examples:
+
+* `list` +
+`reserve 2` +
+Reserve the 2nd book in the catalogue.
+// end::BorrowReturnReserve[]
+
+=== Clearing all accounts : `cleara`
+
+Clears all accounts from AccountList. +
+Format: `clear` +
+Privilege Level: 2(Librarian)
+
+[NOTE]
+When an librarian clears the list of accounts, it is automatically logged out.
+
+
 
 === Add an account : `addAccount` [TO BE IMPLEMENTED]
 

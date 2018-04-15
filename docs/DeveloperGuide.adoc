@@ -91,9 +91,11 @@ When you are ready to start coding,
 1. Get some sense of the overall design by reading <<Design-Architecture>>.
 2. Take a look at <<GetStartedProgramming>>.
 
+
 == Design
 
 [[Design-Architecture]]
+// tag::Design[]
 === Architecture
 
 .Architecture Diagram
@@ -151,6 +153,7 @@ image::SDforDeleteBookEventHandling.png[width="800"]
 Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
 
 The sections below give more details of each component.
+// end::Design[]
 
 [[Design-Ui]]
 === UI component
@@ -170,7 +173,9 @@ The `UI` component,
 * Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
 * Responds to events raised from various parts of the App and updates the UI accordingly.
 
+
 [[Design-Logic]]
+// tag::logiccomponent[]
 === Logic component
 
 [[fig-LogicClassDiagram]]
@@ -192,6 +197,7 @@ Given below is the Sequence Diagram for interactions within the `Logic` componen
 
 .Interactions Inside the Logic Component for the `delete 1` Command
 image::DeleteBookSdForLogic.png[width="800"]
+// end::logiccomponent[]
 
 [[Design-Model]]
 === Model component
